@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setting</title>
+    <style>
+        :root {
+            /* Light theme variables */
+            --bg-color-light: #ffffff;
+            --text-color-light: #333333;
+            --accent-color-light: #4a90e2;
+            --card-bg-light: #f5f6fa;
+            
+            /* Dark theme variables */
+            --bg-color-dark: #1a1a1a;
+            --text-color-dark: #ffffff;
+            --accent-color-dark: #66b0ff;
+            --card-bg-dark: #2d2d2d;
+        }
+
+        /* Default to light theme */
+        body {
+            --bg-color: var(--bg-color-light);
+            --text-color: var(--text-color-light);
+            --accent-color: var(--accent-color-light);
+            --card-bg: var(--card-bg-light);
+            
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+
+        /* Dark theme */
+        body.dark {
+            --bg-color: var(--bg-color-dark);
+            --text-color: var(--text-color-dark);
+            --accent-color: var(--accent-color-dark);
+            --card-bg: var(--card-bg-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+        }
+
+        .title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--accent-color), #7b68ee);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .theme-switcher {
+            position: relative;
+            width: 60px;
+            height: 30px;
+        }
+
+        .switch {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 60px;
+            height: 30px;
+            background-color: #ccc;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .switch::before {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            left: 3px;
+            top: 3px;
+            background-color: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        input[type="checkbox"] {
+            display: none;
+        }
+
+        input[type="checkbox"]:checked + .switch {
+            background-color: var(--accent-color);
+        }
+
+        input[type="checkbox"]:checked + .switch::before {
+            transform: translateX(30px);
+        }
+
+        .content {
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px auto;
+            max-width: 600px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .card h2 {
+            margin-top: 0;
+            color: var(--accent-color);
+            font-size: 1.8rem;
+        }
+
+        .card p {
+            line-height: 1.6;
+            color: var(--text-color);
+        }
+
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2rem;
+            }
+            
+            .card {
+                margin: 10px;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">Setting</h1>
+            <div class="theme-switcher">
+                <input type="checkbox" id="theme-toggle">
+                <label for="theme-toggle" class="switch"></label>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="card">
+                <h2>Welcome to Settings</h2>
+                <p></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const toggle = document.getElementById('theme-toggle');
+        const body = document.body;
+
+        toggle.addEventListener('change', () => {
+            body.classList.toggle('dark');
+            localStorage.setItem('theme', body.classList.contains('dark') ? 'dark' : 'light');
+        });
+
+        // Load saved theme preference
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark');
+            toggle.checked = true;
+        }
+    </script>
+</body>
+</html>
